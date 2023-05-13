@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Str;
+use App\TransformingAttribute;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, TransformingAttribute;
 
     /**
      * The attributes that are mass assignable.
@@ -45,15 +46,5 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // use accessor to get the capital name of db when data access from db
-    protected function getNameAttribute($value): string
-    {
-        return Str::upper($value);
-    }
 
-    // use mutator for hashing the password when data saved to db
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
 }
