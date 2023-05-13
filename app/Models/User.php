@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
@@ -43,6 +44,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // use accessor to get the capital name of db when data access from db
+    protected function getNameAttribute($value): string
+    {
+        return Str::upper($value);
+    }
 
     // use mutator for hashing the password when data saved to db
     public function setPasswordAttribute($value)
