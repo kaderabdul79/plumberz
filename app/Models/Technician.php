@@ -12,11 +12,12 @@ class Technician extends Model
 {
     use HasFactory, TransformingAttribute;
 
-    protected function admin(){
-        return $this->belongsTo(Admin::class);
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class, 'admin_id', 'id');
     }
 
-    protected function category(){
+    public function category(){
         return $this->belongsTo(Category::class);
     }
 }

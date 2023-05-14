@@ -17,9 +17,11 @@ class Admin extends Model
         
     protected $fillable = ['name', 'email', 'password'];
 
-    protected function technicians(){
-        return $this->hasMany(Technician::class);
+    public function technicians()
+    {
+        return $this->hasMany(Technician::class, 'admin_id', 'id');
     }
+
     protected function categories(){
         return $this->hasMany(Category::class);
     }
