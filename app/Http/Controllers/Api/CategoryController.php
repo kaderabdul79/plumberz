@@ -25,4 +25,18 @@ class CategoryController extends Controller
         return response()->json(['data' => $responseData]);
     }
     
+    // get a category based on id
+    public function show($categoryId){
+        $category = Category::find($categoryId);
+
+        if (!$category) {
+            return response()->json(['error' => 'Category not found']);
+        }
+
+        $responseData = [
+            'name' => $category->name,
+        ];
+
+        return response()->json(['data' => $responseData]);
+    }
 }
