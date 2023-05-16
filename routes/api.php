@@ -20,4 +20,5 @@ Route::get('/categories/{id}',[CategoryController::class,'show']);
 
 // Technician
 Route::get('/technicians',[TechnicianController::class,'index']);
+Route::get('/technicians/{id}',[TechnicianController::class,'show']);
 
