@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\TechnicianController;
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -16,4 +17,7 @@ Route::get('/admin',[AdminController::class,'index']);
 // Categories
 Route::get('/categories',[CategoryController::class,'index']);
 Route::get('/categories/{id}',[CategoryController::class,'show']);
+
+// Technician
+Route::get('/technicians',[TechnicianController::class,'index']);
 
