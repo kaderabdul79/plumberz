@@ -102,12 +102,16 @@
                 </v-menu>
             </div></div>
         </v-app-bar>
+        <!-- rendering all other dashboard pages/components from here -->
+        <Overview />
+        <!-- <router-view /> -->
         <!--  -->
     </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import Overview from "./Overview.vue";
 const profileDrawer = ref(false);
 const drawer = ref(true);
 const rail = ref(true);
