@@ -3,7 +3,8 @@ const routes = [
   { path: '/', component: () => import('../views/frontend/HomePage.vue') },
   { path: '/registration', component: () => import('../views/Registration.vue') },
   { path: '/login', component: () => import('../views/Login.vue') },
-
+  { path: '/logout', redirect: "/login" },
+  { path: '/dashboard', component: () => import('../views/backend/Dashboard.vue') },
 
 ];
 
