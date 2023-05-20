@@ -33,21 +33,21 @@
                     title="My Account"
                     value="account"
                 ></v-list-item>
-                <v-list-group value="Admin">
+                <v-list-group value="Users">
                     <template v-slot:activator="{ props }">
                         <v-list-item
                             v-bind="props"
-                            prepend-icon="mdi-account"
-                            title="Admin"
+                            prepend-icon="mdi-account-group-outline"
+                            title="Users"
                         ></v-list-item>
                     </template>
 
                     <v-list-item
-                        v-for="admin in admins"
-                        :key="admin.id"
-                        :title="admin.title"
-                        :prepend-icon="admin.icon"
-                        :value="admin.title"
+                        v-for="user in users"
+                        :key="user.id"
+                        :title="user.title"
+                        :prepend-icon="user.icon"
+                        :value="user.title"
                     ></v-list-item>
                 </v-list-group>
                 <v-list-item
@@ -103,15 +103,13 @@
             </div></div>
         </v-app-bar>
         <!-- rendering all other dashboard pages/components from here -->
-        <Overview />
-        <!-- <router-view /> -->
+        <router-view />
         <!--  -->
     </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import Overview from "./Overview.vue";
 const profileDrawer = ref(false);
 const drawer = ref(true);
 const rail = ref(true);
@@ -124,7 +122,7 @@ const items = ref([
     { title: "Click Me" },
     { title: "Click Me 2" },
 ]);
-const admins = ref([
+const users = ref([
     { id: 1, title: "Create User", icon: "mdi-home-city" },
     { id: 2, title: "Edit User", icon: "mdi mdi-note-edit" },
 ]);
