@@ -16,13 +16,19 @@ class CategoryController extends Controller
     
         foreach ($categories as $category) {
             $categoryData = [
-                'name' => $category->name,
+                'id' => $category->id,
+                'name' => $category->name
             ];
     
             $responseData[] = $categoryData;
         }
-    
-        return response()->json(['data' => $responseData]);
+       
+        $response = [
+            'status' => true,
+            'message' => "fetch all categories!",
+            'categories' => $responseData
+        ];
+        return response()->json($response);
     }
     
     // get a category based on id
@@ -37,6 +43,6 @@ class CategoryController extends Controller
             'name' => $category->name,
         ];
 
-        return response()->json(['data' => $responseData]);
+        return response()->json(['category' => $responseData]);
     }
 }

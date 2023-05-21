@@ -2,14 +2,14 @@
     <div id="categories">
         <v-container fluid>
             <v-row>
-                <v-col col="4">
+                <v-col cols="4">
                     <v-btn color="success">Add new Category</v-btn>
                 </v-col>
-                <v-col col="8">
+                <v-col cols="8">
                     <v-sheet class="text-h4">Categorie's Table</v-sheet>
                     <v-table
                     fixed-header
-                    height="420px"
+                    height="600px"
                 >
                     <thead>
                     <tr>
@@ -46,17 +46,17 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
-  const categories = ref([
-    {
-        id: 1,
-        name: "mason"
-    },
-    {
-        id: 2,
-        name: "wilding"
-    },
-  ])
+import {ref,onMounted} from "vue"
+import axios from 'axios'
+axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
+
+  const categories = ref([])         
+    axios.get('categories/')
+    .then(response => categories.value = response.data?.categories )
+    .catch(error => {
+        console.error(error);
+    });
+
 </script>
 
 <style scoped>
