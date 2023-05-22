@@ -56,6 +56,11 @@ class CategoryController extends Controller
             'name' => $request->name,
         ]);
 
-        return response()->json($category, 201);
+        $response = [
+            'status' => true,
+            'message' => "New Category Inserted!",
+            'category' => $category
+        ];
+        return response()->json($response, 201);
     }
 }

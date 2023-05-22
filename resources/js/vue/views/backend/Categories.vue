@@ -9,6 +9,25 @@
                             <v-text-field v-model="name" label="Name" variant="outlined"></v-text-field>
                             <v-btn @click="handleSubmit" color="success">Submit</v-btn>
                         </v-form>
+                        <v-sheet>
+                            <v-snackbar
+                                timeout="3000"
+                                v-model="snackbar"
+                                right
+                                >
+                                {{ message }}
+
+                                <template v-slot:actions>
+                                    <v-btn
+                                    color="pink"
+                                    variant="text"
+                                    @click="snackbar = false"
+                                    >
+                                    Close
+                                    </v-btn>
+                                </template>
+                            </v-snackbar>
+                        </v-sheet>
                     </v-sheet>
                 </v-col>
                 <v-col cols="8">
@@ -55,10 +74,14 @@
 import {ref,onMounted} from "vue"
 import { useForm } from 'vee-validate';
 const { values } = useForm();
+import { defineRule } from 'vee-validate';
 
 import axios from 'axios'
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
 const name = ref("") 
+const snackbar = ref(false)
+const message = ref("")
+// 
   const categories = ref([])         
     function fetchCategories(){
         axios.get('categories/')
@@ -71,10 +94,10 @@ onMounted(()=>{
     fetchCategories()
 })
     function handleSubmit(e){
-        // e.preventDefault()
-        // console.log(name.value);
         axios.post('categories/',{"name":name.value})
         .then(response => {
+            snackbar.value = true
+            message.value = response.data.message
             name.value = ""
             fetchCategories()
             console.log(response);
@@ -86,5 +109,16 @@ onMounted(()=>{
 </script>
 
 <style scoped>
-
+.v-snackbar__wrapper{
+    top: 60px;
+    right: 0px; 
+    transform: translateX(0%)
+}
+.v-snackbar--active{
+    position: absolute;
+    top: 60px;
+    height: 50px;
+    transform: translateX(560px)
+}
 </style>
+<!--  -->
