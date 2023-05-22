@@ -17,6 +17,7 @@ Route::get('/admin',[AdminController::class,'index']);
 // Categories
 Route::get('/categories',[CategoryController::class,'index']);
 Route::get('/categories/{id}',[CategoryController::class,'show']);
+Route::post('/categories', [CategoryController::class, 'store']);
 
 // Technician
 Route::get('/technicians',[TechnicianController::class,'index']);

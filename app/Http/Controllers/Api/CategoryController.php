@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     // fetch all category and send json response
     public function index(){
-        $categories = Category::all();
+        $categories = Category::latest()->get();
 
         $responseData = [];
     
@@ -44,5 +44,18 @@ class CategoryController extends Controller
         ];
 
         return response()->json(['category' => $responseData]);
+    }
+
+    // create a new category
+    public function store(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:100',
+        ]);
+
+        $category = Category::create([
+            'name' => $request->name,
+        ]);
+
+        return response()->json($category, 201);
     }
 }
