@@ -21,7 +21,13 @@ const routes = [
             path: 'categories',
             name: 'categories',
             component: () => import('../views/backend/Categories.vue'),
-          }
+          },
+          {
+            path: 'categories/:id/edit',
+            props: true,
+            name: 'editcategories',
+            component: () => import('../views/backend/EditCategory.vue'),
+          },
         ],
     },
 ];

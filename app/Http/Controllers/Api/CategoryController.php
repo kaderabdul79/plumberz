@@ -76,4 +76,27 @@ class CategoryController extends Controller
         ];
         return response()->json($response, 201);
     }
+
+    // edit getegory
+    public function edit($id){
+        // Find the category by ID
+        $category = Category::find($id);
+
+        // Check if the category exists
+        if (!$category) {
+            $response = [
+                'status' => false,
+                'message' => 'Category not found!',
+            ];
+            return response()->json($response, 404);
+        }
+
+        $response = [
+            'status' => true,
+            'message' => 'Category details retrieved successfully!',
+            'category' => $category,
+        ];
+        return response()->json($response, 200);
+    }
+
 }
