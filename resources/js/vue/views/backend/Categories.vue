@@ -1,13 +1,14 @@
 <template>
-    <div id="categories">
+    <div id="categories">  
         <v-container fluid>
             <v-row>
                 <v-col cols="4">
                     <v-sheet>
                         <v-sheet class="text-h4 py-2">Add new Category</v-sheet>
-                        <v-form @submit.prevent>
-                            <v-text-field v-model="name" label="Name" variant="outlined"></v-text-field>
-                            <v-btn @click="handleSubmit" color="success">Submit</v-btn>
+                        <v-form @submit="onSubmit">
+                            <v-text-field v-bind="name" label="Name" variant="outlined"></v-text-field>
+                            <v-sheet class="text-red text-subtitle-2 py-0 my-0">{{ errors.name }}</v-sheet>
+                            <v-btn @click="createNewCategory" color="success">Submit</v-btn>
                         </v-form>
                         <v-sheet>
                             <v-snackbar
@@ -72,13 +73,25 @@
 
 <script setup>
 import {ref,onMounted} from "vue"
-import { useForm } from 'vee-validate';
-const { values } = useForm();
-import { defineRule } from 'vee-validate';
 
+import { useForm } from 'vee-validate';
+import * as yup from 'yup';
+
+const { errors, handleSubmit, defineInputBinds, meta, values } = useForm({
+  validationSchema: yup.object({
+    name: yup.string().required(),
+  }),
+});
+
+const onSubmit = handleSubmit(values => {
+  alert(JSON.stringify(values, null, 2));
+});
+
+const name = defineInputBinds('name');
+// 
 import axios from 'axios'
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
-const name = ref("") 
+// const name = ref("") 
 const snackbar = ref(false)
 const message = ref("")
 // 
@@ -93,32 +106,23 @@ const message = ref("")
 onMounted(()=>{
     fetchCategories()
 })
-    function handleSubmit(e){
-        axios.post('categories/',{"name":name.value})
+    function createNewCategory(e){
+        axios.post('categories/',{"name":values.name})
         .then(response => {
+            values.name = ''
+            // console.log(values.name);
             snackbar.value = true
             message.value = response.data.message
-            name.value = ""
             fetchCategories()
             console.log(response);
         })
         .catch(error => {
-            console.error(error);
+            console.error(error.message);
         });
     }
 </script>
 
 <style scoped>
-.v-snackbar__wrapper{
-    top: 60px;
-    right: 0px; 
-    transform: translateX(0%)
-}
-.v-snackbar--active{
-    position: absolute;
-    top: 60px;
-    height: 50px;
-    transform: translateX(560px)
-}
+
 </style>
 <!--  -->
