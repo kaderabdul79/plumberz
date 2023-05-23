@@ -28,6 +28,11 @@ const routes = [
             name: 'editcategories',
             component: () => import('../views/backend/EditCategory.vue'),
           },
+          {
+            path: 'technicians',
+            name: 'technicians',
+            component: () => import('../views/backend/technician/Technicians.vue'),
+          },
         ],
     },
 ];

@@ -24,4 +24,5 @@ Route::get('/categories/{id}/edit', [CategoryController::class, 'edit']);
 // Technician
 Route::get('/technicians',[TechnicianController::class,'index']);
 Route::get('/technicians/{id}',[TechnicianController::class,'show']);
+Route::post('/technicians', [TechnicianController::class, 'store']);
 

@@ -41,4 +41,44 @@ class TechnicianController extends Controller
 
         return response()->json(['data' => $responseData]);
     }
+
+    // add new technician
+    public function store(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email',
+        ]);
+    
+        // Check if the technician already exists based on email
+        $existingTechnician = Technician::where('email', $request->email)->first();
+
+        if ($existingTechnician) {
+        // Technician already exists, return a response
+            $response = [
+                'status' => false,
+                'message' => 'Technician already exists! Try to add a new technician.',
+                'technician' => $existingTechnician
+            ];
+            return response()->json($response, 200);
+        }
+
+        // Create a new technician
+        $technician = Technician::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'admin_id' => 3,
+            'category_id' => 7,
+            'password' => "lorem555"
+            // 'age' => $request->age,
+            // 'years_of_experience' => $request->years_of_experience,
+            // 'address' => $request->address,
+        ]);
+
+        $response = [
+            'status' => true,
+            'message' => 'New technician inserted successfully!',
+            'technician' => $technician
+        ];
+        return response()->json($request, 201);
+    }
 }
