@@ -47,6 +47,10 @@ class TechnicianController extends Controller
         $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email',
+            // 'category' => 'required',
+            'address' => 'required|string',
+            'age' => 'required|integer|between:18,45',
+            'experience' => 'required|integer|between:0,15',
         ]);
     
         // Check if the technician already exists based on email
@@ -68,10 +72,9 @@ class TechnicianController extends Controller
             'email' => $request->email,
             'admin_id' => 3,
             'category_id' => 7,
-            'password' => "lorem555"
-            // 'age' => $request->age,
-            // 'years_of_experience' => $request->years_of_experience,
-            // 'address' => $request->address,
+            'age' => $request->age,
+            'experience' => $request->experience,
+            'address' => $request->address,
         ]);
 
         $response = [
@@ -79,6 +82,6 @@ class TechnicianController extends Controller
             'message' => 'New technician inserted successfully!',
             'technician' => $technician
         ];
-        return response()->json($request, 201);
+        return response()->json($response, 201);
     }
 }

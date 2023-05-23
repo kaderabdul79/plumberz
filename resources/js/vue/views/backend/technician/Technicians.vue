@@ -113,7 +113,6 @@ const form = ref(new Form(
             axios.post('technicians/', {
                                     name: form.value.name,
                                     email: form.value.email,
-                                    category: form.value.category,
                                     address: form.value.address,
                                     age: form.value.age,
                                     experience: form.value.experience,

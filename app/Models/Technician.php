@@ -12,6 +12,15 @@ class Technician extends Model
 {
     use HasFactory, TransformingAttribute;
 
+    protected $fillable = [
+        'name',
+        'email',
+        'age',
+        'experience',
+        'admin_id',
+        'category_id',
+    ];
+
     public function admin()
     {
         return $this->belongsTo(Admin::class, 'admin_id', 'id');
