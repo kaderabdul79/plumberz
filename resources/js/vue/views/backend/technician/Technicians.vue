@@ -93,6 +93,8 @@
 <script setup>
 import Form from 'vform'
 import { ref } from 'vue';
+import useSnackbar from '../../../composables/useSnackbar';
+const { message, snackbar, showSnackbar } = useSnackbar();
 import axios from 'axios'
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
 const form = ref(new Form(
@@ -106,8 +108,7 @@ const form = ref(new Form(
         experience: null,
     }
 ));
-const snackbar = ref(false)
-const message = ref("")
+
     function addNewTechnician(){
         // console.log("test form");
         // console.log(form.value);
@@ -119,15 +120,13 @@ const message = ref("")
                                     experience: form.value.experience,
                                 })
             .then(response => {
-                // form.value = {}
-                snackbar.value = true
-                message.value = response.data.message
-                console.log(response.data);
+                showSnackbar(response.data.message)
+                // console.log(response.data);
             })
             .catch(error => {
                 // console.error(error.response.data.errors);
                 form.value.errors.errors = error.response.data.errors;
-
+                showSnackbar("failed,try again!")
                 // Log the error messages for debugging
                 console.error(error.response.data);
             });
