@@ -2,8 +2,8 @@
     <div id="technicians">  
         <v-container fluid>
             <v-row>
-                <v-col md="4" sm="12" xs="12">{{ form.errors }}{{ form.email }}{{ form.experience }}{{ form.address }}
-                    <v-sheet>{{ form.category }}{{ form.age }}{{ form.name }}
+                <v-col md="4" sm="12" xs="12">{{ form.errors }}
+                    <v-sheet>
                         <v-sheet class="text-h4 py-2">Add Technician</v-sheet>
                         <v-form @submit.prevent="addNewTechnician">
                             <v-text-field v-model="form.name" label="Name" variant="outlined"></v-text-field>
@@ -20,7 +20,7 @@
                             <div class="text-subtitle-2 text-red" v-if="form.errors.has('experience')" v-html="form.errors.get('experience')" />
                             <v-btn type="submit" color="success">Submit</v-btn>
                         </v-form>
-                        <!-- <v-sheet>
+                        <v-sheet>
                             <v-snackbar
                                 timeout="3000"
                                 v-model="snackbar"
@@ -38,7 +38,7 @@
                                     </v-btn>
                                 </template>
                             </v-snackbar>
-                        </v-sheet> -->
+                        </v-sheet>
                     </v-sheet>
                 </v-col>
                 <v-col md="8" sm="12" xs="12">
@@ -106,7 +106,8 @@ const form = ref(new Form(
         experience: null,
     }
 ));
-
+const snackbar = ref(false)
+const message = ref("")
     function addNewTechnician(){
         // console.log("test form");
         // console.log(form.value);
@@ -118,6 +119,9 @@ const form = ref(new Form(
                                     experience: form.value.experience,
                                 })
             .then(response => {
+                // form.value = {}
+                snackbar.value = true
+                message.value = response.data.message
                 console.log(response.data);
             })
             .catch(error => {
