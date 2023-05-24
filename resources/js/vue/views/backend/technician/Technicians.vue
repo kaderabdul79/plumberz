@@ -56,6 +56,9 @@
                             Name
                         </th>
                         <th class="text-left">
+                            Email
+                        </th>
+                        <th class="text-left">
                             Category
                         </th>
                         <th class="text-left">
@@ -65,23 +68,31 @@
                             Year's of Experience
                         </th>
                         <th class="text-left">
+                            Age
+                        </th>
+                        <th class="text-left">
                             Action
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <!-- <tr
-                        v-for="category in categories"
-                        :key="category.id"
+                    <tr
+                        v-for="technician in technicians"
+                        :key="technician.id"
                     >
                     
-                        <td>{{ category.id }}</td>
-                        <td>{{ category.name }}</td>
+                        <td>{{ technician.id }}</td>
+                        <td>{{ technician.name }}</td>
+                        <td>{{ technician.email }}</td>
+                        <td>{{ technician.category }}</td>
+                        <td>{{ technician.address }}</td>
+                        <td>{{ technician.experience }}</td>
+                        <td>{{ technician.age }}</td>
                         <td>
-                        <v-btn :to="{name: 'editcategories',params: {id: category.id}}" class="mr-3" color="success">Edit</v-btn>
+                        <!-- <v-btn :to="{name: 'technician',params: {id: technician.id}}" class="mr-3" color="success">Edit</v-btn> -->
                         <v-btn color="red-darken-1">Delete</v-btn>
                         </td>
-                    </tr> -->
+                    </tr>
                     </tbody>
                 </v-table>
                 </v-col>
@@ -92,7 +103,7 @@
 
 <script setup>
 import Form from 'vform'
-import { ref } from 'vue';
+import { ref,onMounted } from 'vue';
 import useSnackbar from '../../../composables/useSnackbar';
 const { message, snackbar, showSnackbar } = useSnackbar();
 import axios from 'axios'
@@ -131,6 +142,21 @@ const form = ref(new Form(
                 console.error(error.response.data);
             });
     }
+
+    const technicians = ref([])         
+    function getAllTechnicians(){
+        axios.get('technicians/')
+        .then(response => {
+            console.log(response.data);
+            technicians.value = response.data?.data
+        } )
+        .catch(error => {
+            console.error(error);
+        });
+    }
+    onMounted(()=>{
+        getAllTechnicians()
+    })
 </script>
 
 <style scoped>

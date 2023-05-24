@@ -10,14 +10,19 @@ class TechnicianController extends Controller
 {
     // fetch all Technician and send json response
     public function index(){
-        $technicians = Technician::all();
+        $technicians = Technician::latest()->get();
 
         $responseData = [];
 
         foreach ($technicians as $technician) {
             $technicianData = [
+                'id' =>  $technician->id,
                 'name' => $technician->name,
                 'email' => $technician->email,
+                'category' => $technician->category->name,
+                'experience' => $technician->experience,
+                'address' => $technician->address,
+                'age' => $technician->age,
             ];
 
             $responseData[] = $technicianData;
