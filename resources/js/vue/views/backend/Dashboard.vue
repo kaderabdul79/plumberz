@@ -33,6 +33,44 @@
                     title="My Account"
                     value="account"
                 ></v-list-item>
+                <!-- categories -->
+                <v-list-group value="categories">
+                    <template v-slot:activator="{ props }">
+                        <v-list-item
+                            v-bind="props"
+                            prepend-icon="mdi mdi-shape-plus-outline"
+                            title="categories"
+                        ></v-list-item>
+                    </template>
+
+                    <v-list-item
+                        v-for="category in categories"
+                        :key="category.id"
+                        :title="category.title"
+                        :prepend-icon="category.icon"
+                        :value="category.title"
+                    ></v-list-item>
+                </v-list-group>
+                <!-- categories end -->
+                <!-- technicians -->
+                <v-list-group value="Technicians">
+                    <template v-slot:activator="{ props }">
+                        <v-list-item
+                            v-bind="props"
+                            prepend-icon="mdi mdi-account-hard-hat-outline"
+                            title="Technicians"
+                        ></v-list-item>
+                    </template>
+
+                    <v-list-item
+                        v-for="technician in technicians"
+                        :key="technician.id"
+                        :title="technician.title"
+                        :prepend-icon="technician.icon"
+                        :value="technician.title"
+                    ></v-list-item>
+                </v-list-group>
+                <!-- technicians end -->
                 <v-list-group value="Users">
                     <template v-slot:activator="{ props }">
                         <v-list-item
@@ -50,6 +88,7 @@
                         :value="user.title"
                     ></v-list-item>
                 </v-list-group>
+                <!-- users end -->
                 <v-list-item
                     prepend-icon="mdi-account-group-outline"
                     title="Users"
@@ -123,9 +162,17 @@ const items = ref([
     { title: "Click Me 2" },
 ]);
 const users = ref([
-    { id: 1, title: "Create User", icon: "mdi-home-city" },
-    { id: 2, title: "Edit User", icon: "mdi mdi-note-edit" },
+    { id: 1, title: "Create User", icon: "mdi mdi-plus", url: "/users" },
+    { id: 2, title: "Edit User", icon: "mdi mdi-human-edit", url: "/users" },
 ]);
+const technicians = ref([
+    { id: 1, title: "Add Technicians", icon: "mdi mdi-plus", url: "/technicians" },
+    { id: 2, title: "Edit Technicians", icon: "mdi mdi-human-edit", url: "/technicians" },
+])
+const categories = ref([
+    { id: 1, title: "Add Category", icon: "mdi mdi-plus", url: "/categories" },
+    { id: 2, title: "Edit Category", icon: "mdi mdi-human-edit", url: "/categories" },
+])
 </script>
 
 <style scoped>
