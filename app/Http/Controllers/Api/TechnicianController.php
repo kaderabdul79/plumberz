@@ -89,4 +89,25 @@ class TechnicianController extends Controller
         ];
         return response()->json($response, 201);
     }
+
+    // Find the existing technician
+    public function edit($id){
+        $technician = Technician::with('category')->find($id);
+
+        if (!$technician) {
+            // Technician not found
+            $response = [
+                'status' => false,
+                'message' => 'Technician not found!',
+            ];
+            return response()->json($response, 404);
+        }
+
+        $response = [
+            'status' => true,
+            'message' => 'technician details.',
+            'technician' => $technician
+        ];
+        return response()->json($response, 200);
+    }
 }
