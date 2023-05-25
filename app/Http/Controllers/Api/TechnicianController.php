@@ -110,4 +110,46 @@ class TechnicianController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    // update the technician details
+    public function update(Request $request, $id){
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email',
+            'address' => 'required|string',
+            'age' => 'required|integer|between:18,45',
+            'experience' => 'required|integer|between:0,15',
+        ]);
+
+        // Find the existing technician with the associated category
+        $technician = Technician::with('category')->find($id);
+
+        if (!$technician) {
+            // Technician not found
+            $response = [
+                'status' => false,
+                'message' => 'Technician not found!',
+            ];
+            return response()->json($response, 404);
+        }
+
+        // Update the existing technician
+        $technician->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'age' => $request->age,
+            'experience' => $request->experience,
+            'address' => $request->address,
+        ]);
+
+        // Reload the technician with the associated category after the update
+        $technician->load('category');
+
+        $response = [
+            'status' => true,
+            'message' => "Technician detail's updated successfully!",
+            'technician' => $technician
+        ];
+        return response()->json($response, 200);
+    }
 }

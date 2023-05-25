@@ -15,6 +15,7 @@ class Technician extends Model
     protected $fillable = [
         'name',
         'email',
+        'address',
         'age',
         'experience',
         'admin_id',

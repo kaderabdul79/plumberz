@@ -26,4 +26,6 @@ Route::get('/technicians',[TechnicianController::class,'index']);
 Route::get('/technicians/{id}',[TechnicianController::class,'show']);
 Route::post('/technicians', [TechnicianController::class, 'store']);
 Route::get('/technicians/{id}/edit',[TechnicianController::class,'edit']);
+Route::put('/technicians/{id}', [TechnicianController::class, 'update']);
+
 

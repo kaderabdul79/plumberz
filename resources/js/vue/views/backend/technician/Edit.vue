@@ -5,7 +5,7 @@
                 <v-col cols="6" xs="12" offset="3">
                     <v-sheet>
                         <v-sheet class="text-h4 py-2 text-center">Edit Technician Detail's</v-sheet>
-                        <v-form @submit.prevent="updateTechnician">{{ form.value }}
+                        <v-form @submit.prevent="updateTechnician">
                             <v-text-field v-model="form.name" label="Name" variant="outlined"></v-text-field>
                             <div class="text-subtitle-2 text-red" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                             <v-text-field v-model="form.email" label="Email address" variant="outlined" type="email"></v-text-field>
@@ -22,7 +22,7 @@
                             <v-btn type="submit" color="success" block>Submit</v-btn>
                         </v-form>
                         <v-sheet>
-                            <!-- <v-snackbar
+                            <v-snackbar
                                 timeout="3000"
                                 v-model="snackbar"
                                 right
@@ -38,7 +38,7 @@
                                     Close
                                     </v-btn>
                                 </template>
-                            </v-snackbar> -->
+                            </v-snackbar>
                         </v-sheet>
                     </v-sheet>
                 </v-col>
@@ -51,7 +51,8 @@
 import {ref,onMounted} from 'vue'
 const props = defineProps(['id']);
 import Form from 'vform'
-
+import {useRouter} from 'vue-router'
+const router = useRouter()
 import axios from 'axios'
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
 
@@ -77,7 +78,7 @@ const form = ref(new Form(
             form.value.category = response.data?.technician?.category?.name
         } )
         .catch(error => {
-            console.error(error);
+            console.log(error);
         });
     }
     onMounted(()=>{
@@ -85,8 +86,27 @@ const form = ref(new Form(
     })
 
     function updateTechnician(){
-        
-        alert("insert to db")
+        axios.put('technicians/'+props.id, {
+                                    name: form.value.name,
+                                    email: form.value.email,
+                                    address: form.value.address,
+                                    age: form.value.age,
+                                    experience: form.value.experience,
+                                })
+            .then(response => {
+                showSnackbar(response.data?.message)
+                setTimeout(()=>{
+                    router.push({name: "technicians"})
+                },4000)
+                // console.log(response.data);
+            })
+            .catch(error => {
+                // console.error(error.response.data.errors);
+                showSnackbar("failed to edit details/Duplicate Entry Email, try again")
+                form.value.errors.errors = error.response.data.errors;
+                // Log the error messages for debugging
+                console.error(error.response.data);
+            });
     }
 </script>
 
