@@ -68,6 +68,7 @@
                         :title="technician.title"
                         :prepend-icon="technician.icon"
                         :value="technician.title"
+                        :to="{name: technician.name}"
                     ></v-list-item>
                 </v-list-group>
                 <!-- technicians end -->
@@ -162,16 +163,17 @@ const items = ref([
     { title: "Click Me 2" },
 ]);
 const users = ref([
-    { id: 1, title: "Create User", icon: "mdi mdi-plus", url: "/users" },
-    { id: 2, title: "Edit User", icon: "mdi mdi-human-edit", url: "/users" },
+    { id: 1, title: "Create User", icon: "mdi mdi-plus", name: "/users" },
+    { id: 2, title: "Edit User", icon: "mdi mdi-human-edit", name: "/users" },
 ]);
 const technicians = ref([
-    { id: 1, title: "Add Technicians", icon: "mdi mdi-plus", url: "/technicians" },
-    { id: 2, title: "Edit Technicians", icon: "mdi mdi-human-edit", url: "/technicians" },
+    { id: 1, title: "Manage", icon: "mdi mdi-controller-classic-outline", name: "technicians" },
+    { id: 2, title: "Add Technicians", icon: "mdi mdi-plus", name: "createTechnicians" },
+    // { id: 3, title: "Edit Technicians", icon: "mdi mdi-human-edit", name: "editTechnicians" },
 ])
 const categories = ref([
-    { id: 1, title: "Add Category", icon: "mdi mdi-plus", url: "/categories" },
-    { id: 2, title: "Edit Category", icon: "mdi mdi-human-edit", url: "/categories" },
+    { id: 1, title: "Add Category", icon: "mdi mdi-plus", name: "/categories" },
+    { id: 2, title: "Edit Category", icon: "mdi mdi-human-edit", name: "/categories" },
 ])
 </script>
 

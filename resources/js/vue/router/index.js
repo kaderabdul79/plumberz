@@ -33,6 +33,17 @@ const routes = [
             name: 'technicians',
             component: () => import('../views/backend/technician/Technicians.vue'),
           },
+          {
+            path: 'technicians/create',
+            name: 'createTechnicians',
+            component: () => import('../views/backend/technician/create.vue'),
+          },
+          {
+            path: 'technicians/:id/edit',
+            name: 'editTechnicians',
+            props: true,
+            component: () => import('../views/backend/technician/Edit.vue'),
+          },
         ],
     },
 ];
