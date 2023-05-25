@@ -10,7 +10,7 @@
                             <div class="text-subtitle-2 text-red" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                             <v-text-field v-model="form.email" label="Email address" variant="outlined" type="email"></v-text-field>
                             <div class="text-subtitle-2 text-red" v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
-                            <v-select label="Select Category" v-model="form.category" :items="form.categories" variant="outlined"></v-select>
+                            <v-select label="Select Category" :items="form.categories" variant="outlined"></v-select>
                             <div class="text-subtitle-2 text-red" v-if="form.errors.has('category')" v-html="form.errors.get('category')" />
                             <v-text-field v-model="form.address" label="Write address" variant="outlined"></v-text-field>
                             <div class="text-subtitle-2 text-red" v-if="form.errors.has('address')" v-html="form.errors.get('address')" />
