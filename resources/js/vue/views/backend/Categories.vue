@@ -5,10 +5,10 @@
                 <v-col cols="4">
                     <v-sheet>
                         <v-sheet class="text-h4 py-2">Add new Category</v-sheet>
-                        <v-form @submit="onSubmit">
-                            <v-text-field v-bind="name" label="Name" variant="outlined"></v-text-field>
-                            <v-sheet class="text-red text-subtitle-2 py-0 my-0">{{ errors.name }}</v-sheet>
-                            <v-btn @click="createNewCategory" color="success">Submit</v-btn>
+                        <v-form @submit.prevent="createNewCategory">
+                            <v-text-field v-model="form.name" label="Name" variant="outlined"></v-text-field>
+                            <div class="text-subtitle-2 text-red" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                            <v-btn  type="submit" color="success">Submit</v-btn>
                         </v-form>
                         <v-sheet>
                             <v-snackbar
@@ -73,27 +73,18 @@
 
 <script setup>
 import {ref,onMounted} from "vue"
+import Form from 'vform'
 
-import { useForm } from 'vee-validate';
-import * as yup from 'yup';
-
-const { errors, handleSubmit, defineInputBinds, meta, values } = useForm({
-  validationSchema: yup.object({
-    name: yup.string().required(),
-  }),
-});
-
-const onSubmit = handleSubmit(values => {
-  alert(JSON.stringify(values, null, 2));
-});
-
-const name = defineInputBinds('name');
-// 
 import axios from 'axios'
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
 // const name = ref("") 
-const snackbar = ref(false)
-const message = ref("")
+import useSnackbar from '../../composables/useSnackbar';
+const { message, snackbar, showSnackbar } = useSnackbar();
+const form = ref(new Form(
+    {
+        name: '',
+    }
+));
 // 
   const categories = ref([])         
     function fetchCategories(){
@@ -107,17 +98,18 @@ onMounted(()=>{
     fetchCategories()
 })
     function createNewCategory(e){
-        axios.post('categories/',{"name":values.name})
+        axios.post('categories/',{"name":form.value.name})
         .then(response => {
-            values.name = ''
+            form.value.name = ''
             // console.log(values.name);
-            snackbar.value = true
-            message.value = response.data.message
+            showSnackbar(response.data.message)
             fetchCategories()
             console.log(response);
         })
         .catch(error => {
-            console.error(error.message);
+            form.value.errors.errors = error.response.data.errors;
+            showSnackbar("failed to create,try again!")
+            console.error(error);
         });
     }
 </script>
