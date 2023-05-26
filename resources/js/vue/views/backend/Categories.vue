@@ -60,7 +60,7 @@
                         <td>{{ category.name }}</td>
                         <td>
                         <v-btn :to="{name: 'editcategories',params: {id: category.id}}" class="mr-3" color="success">Edit</v-btn>
-                        <v-btn color="red-darken-1">Delete</v-btn>
+                        <v-btn @click="deleteACategory(category.id)" color="red-darken-1">Delete</v-btn>
                         </td>
                     </tr>
                     </tbody>
@@ -110,6 +110,22 @@ onMounted(()=>{
             form.value.errors.errors = error.response.data.errors;
             showSnackbar("failed to create,try again!")
             console.error(error);
+        });
+    }
+
+    function deleteACategory(id){
+        axios.delete('categories/'+id)
+        .then(response => {
+            fetchCategories()
+            showSnackbar(response.data?.message)
+            // console.log(response.data);
+        })
+        .catch(error => {
+            // console.error(error.response.data.errors);
+            showSnackbar("failed to delete, try again")
+            form.value.errors.errors = error.response.data.errors;
+            // Log the error messages for debugging
+            console.error(error.response.data);
         });
     }
 </script>

@@ -19,6 +19,7 @@ Route::get('/categories',[CategoryController::class,'index']);
 Route::get('/categories/{id}',[CategoryController::class,'show']);
 Route::post('/categories', [CategoryController::class, 'store']);
 Route::get('/categories/{id}/edit', [CategoryController::class, 'edit']);
+Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
 
 // Technician
