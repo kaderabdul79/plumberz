@@ -152,4 +152,18 @@ class TechnicianController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    // delete a technician
+    public function destroy($id){
+        $technician = Technician::findOrFail($id);
+
+        // Delete the technician
+        $technician->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Technician deleted successfully!',
+        ]);
+    }
+
 }

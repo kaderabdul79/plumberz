@@ -27,5 +27,6 @@ Route::get('/technicians/{id}',[TechnicianController::class,'show']);
 Route::post('/technicians', [TechnicianController::class, 'store']);
 Route::get('/technicians/{id}/edit',[TechnicianController::class,'edit']);
 Route::put('/technicians/{id}', [TechnicianController::class, 'update']);
+Route::delete('/technicians/{id}', [TechnicianController::class, 'destroy']);
 
 
