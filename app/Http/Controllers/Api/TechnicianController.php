@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Technician;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 
 class TechnicianController extends Controller
@@ -28,7 +29,8 @@ class TechnicianController extends Controller
             $responseData[] = $technicianData;
         }
 
-        return response()->json(['data' => $responseData]);
+        $response = ResponseHelper::successResponse("List of technicians!", $data = $responseData);
+        return response()->json($response);
     }
 
     // get a single technician info.
@@ -36,15 +38,12 @@ class TechnicianController extends Controller
         $technician = Technician::find($technicianId);
 
         if (!$technician) {
-            return response()->json(['error' => 'Technician not found']);
+            $response = ResponseHelper::errorResponse("Technician not found", 404);
+            return response()->json($response);
         }
 
-        $responseData = [
-            'name' => $technician->name,
-            'email' => $technician->email,
-        ];
-
-        return response()->json(['data' => $responseData]);
+        $response = ResponseHelper::successResponse("technician detail's!", $data = $technician);
+        return response()->json($response);
     }
 
     // add new technician
@@ -63,12 +62,8 @@ class TechnicianController extends Controller
 
         if ($existingTechnician) {
         // Technician already exists, return a response
-            $response = [
-                'status' => false,
-                'message' => 'Technician already exists! Try to add a new technician.',
-                'technician' => $existingTechnician
-            ];
-            return response()->json($response, 200);
+            $response = ResponseHelper::errorResponse("Technician already exists! Try to add a new technician.", 200, $data = $existingTechnician);
+            return response()->json($response);
         }
 
         // Create a new technician
@@ -82,12 +77,8 @@ class TechnicianController extends Controller
             'address' => $request->address,
         ]);
 
-        $response = [
-            'status' => true,
-            'message' => 'New technician inserted successfully!',
-            'technician' => $technician
-        ];
-        return response()->json($response, 201);
+        $response = ResponseHelper::successResponse("New technician inserted successfully!", $data = $technician);
+        return response()->json($response);
     }
 
     // Find the existing technician
@@ -96,19 +87,12 @@ class TechnicianController extends Controller
 
         if (!$technician) {
             // Technician not found
-            $response = [
-                'status' => false,
-                'message' => 'Technician not found!',
-            ];
-            return response()->json($response, 404);
+            $response = ResponseHelper::errorResponse("Technician not found!", 404);
+            return response()->json($response);
         }
 
-        $response = [
-            'status' => true,
-            'message' => 'technician details.',
-            'technician' => $technician
-        ];
-        return response()->json($response, 200);
+        $response = ResponseHelper::successResponse("technician details.", $data = $technician);
+        return response()->json($response);
     }
 
     // update the technician details
@@ -126,11 +110,8 @@ class TechnicianController extends Controller
 
         if (!$technician) {
             // Technician not found
-            $response = [
-                'status' => false,
-                'message' => 'Technician not found!',
-            ];
-            return response()->json($response, 404);
+            $response = ResponseHelper::errorResponse("Technician not found!", 404);
+            return response()->json($response);
         }
 
         // Update the existing technician
@@ -145,12 +126,8 @@ class TechnicianController extends Controller
         // Reload the technician with the associated category after the update
         $technician->load('category');
 
-        $response = [
-            'status' => true,
-            'message' => "Technician detail's updated successfully!",
-            'technician' => $technician
-        ];
-        return response()->json($response, 200);
+        $response = ResponseHelper::successResponse("Technician detail's updated successfully!", $data = $technician);
+        return response()->json($response);
     }
 
     // delete a technician
@@ -160,10 +137,8 @@ class TechnicianController extends Controller
         // Delete the technician
         $technician->delete();
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Technician deleted successfully!',
-        ]);
+        $response = ResponseHelper::successResponse("Technician deleted successfully!");
+        return response()->json($response);
     }
 
 }

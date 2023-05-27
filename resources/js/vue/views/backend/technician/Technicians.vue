@@ -3,40 +3,43 @@
         <v-container fluid>
             <v-row>
                 <v-col cols="12">
-                    <v-sheet class="text-h4 py-2">Technician's Detail's</v-sheet>
+                    <v-sheet class="d-flex justify-space-between">
+                        <h2 class="">Technician's Detail's</h2>
+                        <div><v-btn :to="{name: 'createTechnicians'}" color="primary" class="">Add New</v-btn></div>
+                    </v-sheet>
                     <v-table
                     fixed-header
                     height="600px"
                 >
-                    <thead class="text-center">
-                    <tr class="text-center">
-                        <th>
+                    <thead class="">
+                    <tr>
+                        <th class="text-center">
                             Id
                         </th>
-                        <th>
+                        <th class="text-center">
                             Name
                         </th>
-                        <th>
+                        <th class="text-center">
                             Email
                         </th>
-                        <th class="text-left">
+                        <th class="text-center">
                             Category
                         </th>
-                        <th class="text-left">
+                        <th class="text-center">
                             Address
                         </th>
-                        <th class="text-left">
-                            Year's of Experience
+                        <th class="text-center">
+                            Experience
                         </th>
-                        <th class="text-left">
+                        <th class="text-center">
                             Age
                         </th>
-                        <th class="text-left">
+                        <th class="text-center">
                             Action
                         </th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                     <tr
                         v-for="technician in technicians"
                         :key="technician.id"
@@ -94,7 +97,7 @@ axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
     function getAllTechnicians(){
         axios.get('technicians/')
         .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             technicians.value = response.data?.data
         } )
         .catch(error => {
@@ -115,7 +118,7 @@ axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
         .catch(error => {
             // console.error(error.response.data.errors);
             showSnackbar("failed to delete, try again")
-            form.value.errors.errors = error.response.data.errors;
+            // form.value.errors.errors = error.response.data.errors;
             // Log the error messages for debugging
             console.error(error.response.data);
         });

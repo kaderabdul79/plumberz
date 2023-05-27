@@ -73,9 +73,9 @@ const form = ref(new Form(
     function getATechnicians(){
         axios.get('technicians/'+props.id+'/edit')
         .then(response => {
-            // console.log(response);
-            form.value.fill(response.data?.technician)
-            form.value.category = response.data?.technician?.category?.name
+            // console.log(response.data.data);
+            form.value.fill(response.data?.data)
+            form.value.category = response.data?.data?.category?.name
         } )
         .catch(error => {
             console.log(error);

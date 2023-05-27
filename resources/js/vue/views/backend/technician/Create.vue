@@ -10,7 +10,7 @@
                             <div class="text-subtitle-2 text-red" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                             <v-text-field v-model="form.email" label="Email address" variant="outlined" type="email"></v-text-field>
                             <div class="text-subtitle-2 text-red" v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
-                            <v-select label="Select Category" :items="form.categories" variant="outlined"></v-select>
+                            <v-select label="Select Category" v-model="form.category" :items="form.categories" variant="outlined"></v-select>
                             <div class="text-subtitle-2 text-red" v-if="form.errors.has('category')" v-html="form.errors.get('category')" />
                             <v-text-field v-model="form.address" label="Write address" variant="outlined"></v-text-field>
                             <div class="text-subtitle-2 text-red" v-if="form.errors.has('address')" v-html="form.errors.get('address')" />
@@ -49,10 +49,12 @@
 <script setup>
 import Form from 'vform'
 import { ref,onMounted } from 'vue';
+import {useRouter} from 'vue=router'
 import useSnackbar from '../../../composables/useSnackbar';
 const { message, snackbar, showSnackbar } = useSnackbar();
 import axios from 'axios'
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
+const router = useRouter()
 const form = ref(new Form(
     {
         name: '',
@@ -71,14 +73,17 @@ const form = ref(new Form(
             axios.post('technicians/', {
                                     name: form.value.name,
                                     email: form.value.email,
+                                    // category: form.value.category,
                                     address: form.value.address,
                                     age: form.value.age,
                                     experience: form.value.experience,
                                 })
             .then(response => {
-                showSnackbar(response.data.message)
-                form.value = originalData
-                // console.log(response.data);
+                // showSnackbar(response.data.message)
+                setTimeout(()=>{
+                    router.push({name: "technicians"})
+                },4000)
+                console.log(response.data);
             })
             .catch(error => {
                 // console.error(error.response.data.errors);
