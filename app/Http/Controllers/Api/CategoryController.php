@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
@@ -23,11 +24,7 @@ class CategoryController extends Controller
             $responseData[] = $categoryData;
         }
        
-        $response = [
-            'status' => true,
-            'message' => "fetch all categories!",
-            'categories' => $responseData
-        ];
+        $response = ResponseHelper::successResponse("List of Categories!", $data = $responseData);
         return response()->json($response);
     }
     
@@ -36,14 +33,17 @@ class CategoryController extends Controller
         $category = Category::find($categoryId);
 
         if (!$category) {
-            return response()->json(['error' => 'Category not found']);
+            $response = ResponseHelper::errorResponse("Category not found!", 404, $data = $category);
+            return response()->json($response);
         }
 
         $responseData = [
+            'id' => $category->id,
             'name' => $category->name,
         ];
 
-        return response()->json(['category' => $responseData]);
+        $response = ResponseHelper::successResponse("List of Categories!", $data = $responseData);
+        return response()->json($response);
     }
 
     // create a new category
@@ -57,24 +57,16 @@ class CategoryController extends Controller
 
         if ($existingCategory) {
             // Category already exists, Try to add unique category
-            $response = [
-                'status' => false,
-                'message' => 'Category already exists!Try to add unique category.',
-                'category' => $existingCategory
-            ];
-            return response()->json($response, 200);
+            $response = ResponseHelper::errorResponse("Category already exists!Try to add unique category", 200, $data = $existingCategory);
+            return response()->json($response);
         }
 
         $category = Category::create([
             'name' => $request->name,
         ]);
 
-        $response = [
-            'status' => true,
-            'message' => "New Category Inserted!",
-            'category' => $category
-        ];
-        return response()->json($response, 201);
+        $response = ResponseHelper::successResponse("New Category Inserted!", $data = $category);
+        return response()->json($response);
     }
 
     // edit getegory
@@ -84,18 +76,11 @@ class CategoryController extends Controller
 
         // Check if the category exists
         if (!$category) {
-            $response = [
-                'status' => false,
-                'message' => 'Category not found!',
-            ];
-            return response()->json($response, 404);
+            $response = ResponseHelper::errorResponse("Category not found!", 404, $data = $category);
+            return response()->json($response);
         }
-
-        $response = [
-            'status' => true,
-            'message' => 'Category details retrieved successfully!',
-            'category' => $category,
-        ];
+        
+        $response = ResponseHelper::successResponse("Category details retrieved successfully!", $data = $category);
         return response()->json($response, 200);
     }
 
@@ -106,10 +91,8 @@ class CategoryController extends Controller
         // Delete category
         $category->delete();
     
-        return response()->json([
-            'status' => true,
-            'message' => 'Category deleted!',
-        ]);
+        $response = ResponseHelper::successResponse('Category deleted!');
+        return response()->json($response, 201);
     }
 
 }

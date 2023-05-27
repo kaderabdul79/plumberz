@@ -89,7 +89,7 @@ const form = ref(new Form(
   const categories = ref([])         
     function fetchCategories(){
         axios.get('categories/')
-        .then(response => categories.value = response.data?.categories )
+        .then(response => categories.value = response.data?.data )
         .catch(error => {
             console.error(error);
         });
