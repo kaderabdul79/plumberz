@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\TechnicianController;
@@ -29,5 +30,13 @@ Route::post('/technicians', [TechnicianController::class, 'store']);
 Route::get('/technicians/{id}/edit',[TechnicianController::class,'edit']);
 Route::put('/technicians/{id}', [TechnicianController::class, 'update']);
 Route::delete('/technicians/{id}', [TechnicianController::class, 'destroy']);
+
+// Users
+Route::get('/users',[UserController::class,'index']);
+Route::get('/users{id}',[UserController::class,'show']);
+Route::post('/users', [UserController::class, 'store']);
+Route::get('/users{id}/edit',[UserController::class,'edit']);
+Route::put('/users{id}', [UserController::class, 'update']);
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 
