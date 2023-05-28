@@ -44,6 +44,23 @@ const routes = [
             props: true,
             component: () => import('../views/backend/technician/Edit.vue'),
           },
+          // users
+          {
+            path: 'users',
+            name: 'users',
+            component: () => import('../views/backend/user/Users.vue'),
+          },
+          {
+            path: 'users/create',
+            name: 'createUsers',
+            component: () => import('../views/backend/user/Create.vue'),
+          },
+          {
+            path: 'users/:id/edit',
+            name: 'editUsers',
+            props: true,
+            component: () => import('../views/backend/user/Edit.vue'),
+          },
         ],
     },
 ];

@@ -87,6 +87,7 @@
                         :title="user.title"
                         :prepend-icon="user.icon"
                         :value="user.title"
+                        :to="{name: user.name}"
                     ></v-list-item>
                 </v-list-group>
                 <!-- users end -->
@@ -163,8 +164,8 @@ const items = ref([
     { title: "Click Me 2" },
 ]);
 const users = ref([
-    { id: 1, title: "Create User", icon: "mdi mdi-plus", name: "/users" },
-    { id: 2, title: "Edit User", icon: "mdi mdi-human-edit", name: "/users" },
+    { id: 1, title: "Manage", icon: "mdi mdi-controller-classic-outline", name: "users" },
+    { id: 2, title: "Create User", icon: "mdi mdi-plus", name: "createUsers" },
 ]);
 const technicians = ref([
     { id: 1, title: "Manage", icon: "mdi mdi-controller-classic-outline", name: "technicians" },
