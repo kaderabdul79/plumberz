@@ -49,7 +49,7 @@
 <script setup>
 import Form from 'vform'
 import { ref,onMounted } from 'vue';
-import {useRouter} from 'vue=router'
+import {useRouter} from 'vue-router'
 import useSnackbar from '../../../composables/useSnackbar';
 const { message, snackbar, showSnackbar } = useSnackbar();
 import axios from 'axios'
