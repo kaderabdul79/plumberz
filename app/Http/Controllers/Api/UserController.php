@@ -88,7 +88,6 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email',
-            'password' => 'required|string',
         ]);
     
         // Find the existing user
@@ -104,7 +103,6 @@ class UserController extends Controller
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
         ]);
     
         $response = ResponseHelper::successResponse("user detail's updated successfully!", $data = $user);
